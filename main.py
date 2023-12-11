@@ -2,6 +2,8 @@
 
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Response
+from urllib.parse import quote
+
 import shutil
 import subprocess
 import tempfile
@@ -65,7 +67,9 @@ async def upload_file(file: UploadFile = File(...), additional_params: str = "")
                 # Set Content-Disposition header to specify the filename
                 # response.headers["Content-Disposition"] = f"attachment; filename={file.filename}.pdf"
                 returned_filename = 'converted.pdf'
-                response.headers["Content-Disposition"] = f"attachment; filename={returned_filename}"
+                encoded_filename = quote(f'{file.filename}.pdf'.encode('utf-8'))
+
+                response.headers["Content-Disposition"] = f"attachment; filename={encoded_filename}"
 
                 return response
 
