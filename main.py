@@ -1,7 +1,7 @@
 # uvicorn main:app --reload
 
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Response
 import shutil
 import subprocess
 import tempfile
@@ -18,10 +18,6 @@ logger = logging.getLogger()
 
 app = FastAPI()
 
-path_to_mailconverterprox = r'C:\Program Files\CoolUtils\TotalMailConverterProX\MailConverterProX64.exe'
-path_to_mailconverterprox = path_to_mailconverterprox.replace(" ", "` ")
-
-
 # MailConverterProX64.exe "<source>" "<destination>" <options>
 path_to_mailconverterprox = r'"C:\Program Files\CoolUtils\TotalMailConverterProX\MailConverterProX64.exe"'
 
@@ -29,10 +25,7 @@ source_path = r'"C:\Users\tdh\Downloads\На набережных Сочи ща�
 destination_path = r'"C:\Users\tdh\Downloads\На набережных Сочи щас ни-ко-го….eml.copy"'
 
 def run_command(input_file_path, output_file_path, additional_params):
-    # Replace 'your_program' with the actual command line program and arguments
-    # command = [str(path_to_mailconverterprox), f'"{input_file_path}"', f'"{output_file_path}"'] + additional_params
-    # command = [path_to_mailconverterprox, input_file_path.replace(" ", "` "),
-    #            output_file_path.replace(" ", "` ")] + additional_params
+
     command = f'{path_to_mailconverterprox} "{input_file_path}" "{output_file_path}" -c PDF'
     print(f'{command=}')
     try:
@@ -42,14 +35,13 @@ def run_command(input_file_path, output_file_path, additional_params):
         logger.error(f"Command '{' '.join(command)}' failed with error: {e}")
         raise RuntimeError(f"Command '{' '.join(command)}' failed with error: {e}")
 
-
 @app.post("/convert_file/")
 async def upload_file(file: UploadFile = File(...), additional_params: str = ""):
     try:
         # Create a temporary directory to store files
         with tempfile.TemporaryDirectory() as temp_dir:
             file_path = f"{temp_dir}\\{file.filename}"
-            print(f'{file_path=}')
+            # print(f'{file_path=}')
             # Save the uploaded file to the temporary directory
             with open(file_path, "wb") as temp_file:
                 shutil.copyfileobj(file.file, temp_file)
@@ -64,8 +56,10 @@ async def upload_file(file: UploadFile = File(...), additional_params: str = "")
             run_command(file_path, output_file_path, additional_params.split())
 
             # Return the resulting file
-            # with open(output_file_path, "rb") as result_file:
-            #     return {"result_file": result_file.read()}
-            return {"result_file": 'ы'}
+            with open(output_file_path, "rb") as result_file:
+                # return {"result_file": result_file.read()}
+                return Response(content=result_file.read(), media_type="application/octet-stream")
+
+            # return {"result_file": 'ы'}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to process file: {str(e)}")
