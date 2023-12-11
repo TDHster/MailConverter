@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 import subprocess
 
-path_to_mailconverterprox = (r'"C:\Program Files\CoolUtils\TotalMailConverterProX\MailConverterProX64.exe"')
+path_to_mailconverterprox = r'"C:\Program Files\CoolUtils\TotalMailConverterProX\MailConverterProX64.exe"'
                              # .replace(" ", "` "))
 # path_to_mailconverterprox = 'copy'
 
