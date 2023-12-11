@@ -58,7 +58,16 @@ async def upload_file(file: UploadFile = File(...), additional_params: str = "")
             # Return the resulting file
             with open(output_file_path, "rb") as result_file:
                 # return {"result_file": result_file.read()}
-                return Response(content=result_file.read(), media_type="application/octet-stream")
+                # return Response(content=result_file.read(), media_type="application/octet-stream")
+                # response.headers["Content-Disposition"] = f"attachment; filename={file_name}"
+                content = result_file.read()
+                response = Response(content=content, media_type="application/octet-stream")
+                # Set Content-Disposition header to specify the filename
+                # response.headers["Content-Disposition"] = f"attachment; filename={file.filename}.pdf"
+                returned_filename = 'converted.pdf'
+                response.headers["Content-Disposition"] = f"attachment; filename={returned_filename}"
+
+                return response
 
             # return {"result_file": 'ы'}
     except Exception as e:
