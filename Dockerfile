@@ -24,8 +24,10 @@ COPY MailConverter /app/MailConverter
 
 #RUN ls -lah
 
-
 #CMD ["MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
+
+# Expose port 8000 from the container
+EXPOSE 8000
 
 #CMD ["/bin/bash"]
 CMD ["uvicorn", "API.mailconverter-api:app"]
