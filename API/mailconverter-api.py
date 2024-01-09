@@ -1,4 +1,5 @@
 # uvicorn API.mailconverter-api:app --reload
+# uvicorn API.mailconverter-api:app --host 0.0.0.0 --port 8000
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Response
 from urllib.parse import quote
@@ -28,7 +29,7 @@ wine_path = 'wine'
 def run_command(input_file_path: str, output_file_path: str, additional_params=''):
 
     # command = f'{wine_path} {path_to_mailconverter} "{input_file_path}" "{output_file_path}" -c PDF'
-    command = [wine_path, path_to_mailconverter, input_file_path, output_file_path, additional_params]
+    command = [str(wine_path), str(path_to_mailconverter), str(input_file_path), str(output_file_path), additional_params]
     print(f'{command=}')
     try:
         subprocess.run(command, check=True)
