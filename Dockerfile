@@ -31,10 +31,7 @@ COPY MailConverter /app/MailConverter
 EXPOSE 8000
 
 #CMD ["/bin/bash"]
-CMD ["uvicorn", "API.mailconverter-api:app"]
-
-
-
+CMD ["uvicorn", "API.mailconverter-api:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
 #CMD ["CoolUtils/TotalMailConverterProX/MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
