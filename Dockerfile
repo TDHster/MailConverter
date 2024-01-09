@@ -21,9 +21,9 @@ COPY MailConverter .
 
 #COPY mail.eml .
 
-RUN wine 15-MailConverterX.32.exe  mail.eml  mail.eml.pdf
+#RUN wine 15-MailConverterX.32.exe  mail.eml  mail.eml.pdf
 
-RUN ls -lah
+#RUN ls -lah
 
 
 #CMD ["MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
