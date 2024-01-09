@@ -1,6 +1,7 @@
 FROM x11docker/lxde-wine
 #FROM x11docker/xserver
 
+RUN winecfg
 
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
