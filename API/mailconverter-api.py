@@ -25,7 +25,7 @@ path_to_mailconverter = Path("MailConverter/15-MailConverterX.32.exe")
 source_path = r'"C:\Users\tdh\Downloads\На набережных Сочи щас ни-ко-го….eml"'
 destination_path = r'"C:\Users\tdh\Downloads\На набережных Сочи щас ни-ко-го….eml.pdf"'
 wine_path = 'wine'
-def run_command(input_file_path, output_file_path, additional_params=''):
+def run_command(input_file_path: str, output_file_path: str, additional_params=''):
 
     # command = f'{wine_path} {path_to_mailconverter} "{input_file_path}" "{output_file_path}" -c PDF'
     command = [wine_path, path_to_mailconverter, input_file_path, output_file_path, additional_params]
@@ -59,7 +59,7 @@ async def convert_file_api(file: UploadFile = File(...), additional_params: str 
             print(f'{output_file_path=}')
             print(f'{additional_params.split()=}')
 
-            run_command(file_path, output_file_path)
+            run_command(str(file_path), str(output_file_path))
 
             # Return the resulting file
             with open(output_file_path, "rb") as result_file:
