@@ -1,4 +1,4 @@
-# uvicorn main:app --reload
+# uvicorn API.mailconverter-api:app --reload
 
 from fastapi import FastAPI, UploadFile, File, HTTPException, Response
 from urllib.parse import quote
