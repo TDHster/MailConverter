@@ -29,7 +29,7 @@ wine_path = 'wine'
 def run_command(input_file_path: str, output_file_path: str, additional_params=''):
 
     # command = f'{wine_path} {path_to_mailconverter} "{input_file_path}" "{output_file_path}" -c PDF'
-    command = [str(wine_path), str(path_to_mailconverter), str(input_file_path), str(output_file_path), additional_params]
+    command = [wine_path, path_to_mailconverter, input_file_path, output_file_path]
     print(f'{command=}')
     try:
         subprocess.run(command, check=True)
