@@ -15,9 +15,8 @@ RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 RUN rm requirements.txt
 
-COPY API .
-
-COPY MailConverter .
+COPY API /app/API
+COPY MailConverter /app/MailConverter
 
 #COPY mail.eml .
 
