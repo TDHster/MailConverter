@@ -22,7 +22,7 @@ app = FastAPI()
 
 # MailConverterProX64.exe "<source>" "<destination>" <options>
 # path_to_mailconverter = r'"C:\Program Files\CoolUtils\TotalMailConverterProX\MailConverterProX64.exe"'
-path_to_mailconverter = Path("MailConverter/15-MailConverterX.32.exe")
+path_to_mailconverter = str(Path("MailConverter/15-MailConverterX.32.exe"))
 source_path = r'"C:\Users\tdh\Downloads\На набережных Сочи щас ни-ко-го….eml"'
 destination_path = r'"C:\Users\tdh\Downloads\На набережных Сочи щас ни-ко-го….eml.pdf"'
 wine_path = 'wine'
