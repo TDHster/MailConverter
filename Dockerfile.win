@@ -1,0 +1,9 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+WORKDIR /app
+
+COPY CoolUtils .
+
+COPY mail.eml .
+
+CMD ["CoolUtils/TotalMailConverterProX/MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
