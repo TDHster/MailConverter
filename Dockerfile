@@ -22,7 +22,8 @@ RUN ls -lah
 
 #CMD ["MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
+CMD ["uvicorn", "API.mailconverter-api:app"]
 
 
 
