@@ -1,7 +1,8 @@
 FROM x11docker/lxde-wine
 #FROM x11docker/xserver
 
-RUN winecfg
+#will broke RUN winecfg
+#RUN winetricks
 
 RUN apt-get update && \
     apt-get install -y python3 python3-pip && \
@@ -16,23 +17,27 @@ RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 RUN rm requirements.txt
 
-COPY API /app/API
-COPY MailConverter /app/MailConverter
+#ENV DISPLAY=:0
+#ENV WINEARCH=win32
 
-#COPY mail.eml .
+#COPY API /app/API
+#COPY MailConverter /app/MailConverter
 
+COPY mailconverter-api.py .
+
+COPY 15-MailConverterX.32.exe .
+
+COPY mail.eml .
+
+#RUN wine /app/MailConverter/15-MailConverterX.32.exe  /app/MailConverter/mail.eml  /app/MailConverter/mail.eml.pdf
+#RUN wine /app/MailConverter/15-MailConverterX.32.exe /app/MailConverter/mail.eml /app/MailConverter/mail.eml.pdf > /tmp/wine_output.log 2>&1
 #RUN wine 15-MailConverterX.32.exe  mail.eml  mail.eml.pdf
-
-#RUN ls -lah
 
 #CMD ["MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
 
 # Expose port 8000 from the container
-EXPOSE 8000
+#EXPOSE 8000
 
-#CMD ["/bin/bash"]
+CMD ["/bin/bash"]
 #uvicorn API.mailconverter-api:app --host 0.0.0.0 --port 8000
-CMD ["uvicorn", "API.mailconverter-api:app", "--host", "0.0.0.0", "--port", "8000"]
-
-
-#CMD ["CoolUtils/TotalMailConverterProX/MailConverterProX.exe", "mail.eml", "mail.eml.pdf", "-c", "PDF"]
+#CMD ["uvicorn", "API.mailconverter-api:app", "--host", "0.0.0.0", "--port", "8000"]
